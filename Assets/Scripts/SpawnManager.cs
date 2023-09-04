@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -11,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
     [SerializeField]
     private float _spawnRate = 3.0f;
+
+    private bool _stopSpawning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class SpawnManager : MonoBehaviour
     // Spawn game objects every 3 seconds
     IEnumerator SpawnRoutine()
     {
-        while (true)
+        while (_stopSpawning == false)
         {
             // Instantiate an enemy prefab
             Vector3 spawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), 7.0f, 0);
@@ -39,5 +40,10 @@ public class SpawnManager : MonoBehaviour
             // Wait for 3 seconds
             yield return new WaitForSeconds(_spawnRate);
         }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
     }
 }
