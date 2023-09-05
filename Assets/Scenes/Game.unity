@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dde85e234945f48824f7178007b486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 5
   _laserPrefab: {fileID: 4297640536311997639, guid: c0b9aeebd3f073c46b30c3c85cb40d30, type: 3}
   _fireRate: 0.345
   _lives: 3
@@ -292,8 +292,8 @@ Transform:
   m_GameObject: {fileID: 51242143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0147, y: 1.0523, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.38, y: 0.38, z: 0.38}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -641,8 +641,8 @@ Transform:
   m_GameObject: {fileID: 970947259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0348, y: -0.0748, z: 0}
-  m_LocalScale: {x: 1.074626, y: 1.0492487, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.074626, y: 1.0786277, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
