@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldsActive = false;
-
+    [SerializeField]
+    private GameObject _shieldVisualizer;
     private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     {
         // Set the player's position to the origin
         transform.position = new Vector3(0, 0, 0);
+        _shieldVisualizer.SetActive(false);
 
         // Get the spawn manager
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
@@ -99,6 +101,7 @@ public class Player : MonoBehaviour
         if (_isShieldsActive == true)
         {
             _isShieldsActive = false;
+            _shieldVisualizer.SetActive(false);
             return;
         }
         else
@@ -144,12 +147,14 @@ public class Player : MonoBehaviour
     public void ShieldsActive()
     {
         _isShieldsActive = true;
+        _shieldVisualizer.SetActive(true);
         StartCoroutine(ShieldsPowerDownRoutine());
     }
 
     IEnumerator ShieldsPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
+        _shieldVisualizer.SetActive(false);
         _isShieldsActive = false;
     }
 }
