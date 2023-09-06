@@ -33,13 +33,12 @@ public class PowerUp : MonoBehaviour
                         player.SpeedBoostActive();
                         break;
                     case 2:
-                        //player.ShieldsActive();
+                        player.ShieldsActive();
                         break;
                     default:
                         Debug.Log("No power up collected");
                         break;
                 }
-                player.TripleShotActive();
             }
             Destroy(this.gameObject);
         }
