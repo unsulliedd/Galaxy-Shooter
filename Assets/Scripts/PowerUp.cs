@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    private float _speed = 3.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,18 @@ public class PowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate((_speed * Time.deltaTime) * Vector3.down);
+        if (transform.position.y < -5.5f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
