@@ -232,7 +232,7 @@ MonoBehaviour:
   _speed: 5
   _fireRate: 0.345
   _lives: 3
-  _isTripleShotActive: 1
+  _isTripleShotActive: 0
 --- !u!212 &51242147
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -331,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 5794634579973101623, guid: 9105cd8d4cc2ac4439e46f1172f2b0fc, type: 3}
   _enemyContainer: {fileID: 821046511}
+  _tripleShotPowerUpPrefab: {fileID: 6279422416030466170, guid: 616ab1197ae5f2841813d1d7b08b8f23, type: 3}
   _spawnRate: 3
 --- !u!4 &274600236
 Transform:
