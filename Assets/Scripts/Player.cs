@@ -123,6 +123,7 @@ public class Player : MonoBehaviour
         _speed *= _speedBoostMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
+
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
