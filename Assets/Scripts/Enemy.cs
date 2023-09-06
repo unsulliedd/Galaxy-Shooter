@@ -5,6 +5,19 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
 
+    private Player _player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if(_player == null)
+        {
+            Debug.LogError("The Player is NULL.");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -19,19 +32,21 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("Hit: " + other.transform.name);
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            Player player = other.transform.GetComponent<Player>();
-            if(player != null)
+            if(_player != null)
             {
-                player.Damage();
+                _player.Damage();
             }
             Destroy(this.gameObject);
         }
 
         else if(other.CompareTag("Laser"))
         {
+            if(_player != null)
+            {
+                _player.AddScore(10);
+            }
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
