@@ -336,6 +336,7 @@ MonoBehaviour:
   _powerUps:
   - {fileID: 6279422416030466170, guid: 616ab1197ae5f2841813d1d7b08b8f23, type: 3}
   - {fileID: 2550182571385438801, guid: a9d7d867ba0a67342bc69d2903daa45b, type: 3}
+  - {fileID: 943953589316476007, guid: e078395202a3abc45848c83f787bac37, type: 3}
   _spawnRate: 3
 --- !u!4 &274600236
 Transform:
