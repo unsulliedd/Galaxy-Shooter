@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
     [SerializeField]
+    private TextMeshProUGUI _restartText;
+    [SerializeField]
     private Image _livesImage;
     [SerializeField]
     private Sprite[] _liveSprites;
@@ -32,9 +34,15 @@ public class UIManager : MonoBehaviour
         _livesImage.sprite = _liveSprites[currentLive];
         if (currentLive == 0)
         {
-            _gameOverText.text = "WASTED";
-            StartCoroutine(GameOverFlickerRoutine());
+            GameOverSequence();
         }
+    }
+    
+    void GameOverSequence()
+    {
+        _gameOverText.text = "WASTED";
+        _restartText.gameObject.SetActive(true);
+        StartCoroutine(GameOverFlickerRoutine());
     }
 
     IEnumerator GameOverFlickerRoutine()
@@ -42,9 +50,9 @@ public class UIManager : MonoBehaviour
         while (true)
         {
             _gameOverText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             _gameOverText.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
