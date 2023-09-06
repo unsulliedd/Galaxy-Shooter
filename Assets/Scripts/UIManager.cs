@@ -17,11 +17,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] _liveSprites;
 
+    private GameManager _gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+
+        if(_gameManager == null)
+        {
+            Debug.LogError("The Game Manager is NULL.");
+        }
     }
 
     public void UpdateScore(int playerScore)
@@ -40,6 +48,7 @@ public class UIManager : MonoBehaviour
     
     void GameOverSequence()
     {
+        _gameManager.GameOver();
         _gameOverText.text = "WASTED";
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());

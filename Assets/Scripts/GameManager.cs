@@ -1,0 +1,22 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    [SerializeField]
+    private bool _isGameOver;
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _isGameOver == true)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    public void GameOver()
+    {
+        _isGameOver = true;
+    }
+}
