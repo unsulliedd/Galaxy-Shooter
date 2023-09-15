@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
     private GameObject _shieldVisualizer;
     [SerializeField]
     private GameObject _thruster;
+    [SerializeField]
+    private GameObject _leftEngineFire, _rightEngineFire;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -124,24 +127,47 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if (_isShieldsActive == true)
+        int randomIndex = Random.Range(0, 2);
+
+        if (_isShieldsActive)
         {
             _isShieldsActive = false;
             _shieldVisualizer.SetActive(false);
             return;
         }
-        else
+
+
+        _lives--;
+        _uiManager.UpdateLives(_lives);
+        HandleEngineDamage(randomIndex);
+
+        if (_lives < 1)
         {
-            _lives--;
-            _uiManager.UpdateLives(_lives);
-            if (_lives < 1)
+            if (_spawnManager != null)
             {
-                if (_spawnManager != null)
-                {
-                    _spawnManager.OnPlayerDeath();
-                }
-                Destroy(this.gameObject);
+                _spawnManager.OnPlayerDeath();
             }
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void HandleEngineDamage(int randomIndex)
+    {
+        if (_lives == 2)
+        {
+            if (randomIndex == 0)
+            {
+                _leftEngineFire.SetActive(true);
+            }
+            else
+            {
+                _rightEngineFire.SetActive(true);
+            }
+        }
+        else if (_lives == 1)
+        {
+            _leftEngineFire.SetActive(true);
+            _rightEngineFire.SetActive(true);
         }
     }
 
