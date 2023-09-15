@@ -8,16 +8,35 @@ public class Asteroid : MonoBehaviour
     private float _speed = 5.0f;
     [SerializeField]
     private GameObject _explosionPrefab;
+    [SerializeField]
+    private AudioClip _explosionSoundClip;
 
     private Player _player;
-
+    private AudioSource _audioSource;
+    private Renderer _renderer;
+    private Collider2D _collider2D;
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        if (_player == null)
+        if (!GameObject.Find("Player").TryGetComponent<Player>(out _player))
         {
             Debug.LogError("The Player is NULL.");
+        }
+        if (!TryGetComponent(out _audioSource))
+        {
+            Debug.LogError("The AudioSource on the Asteroid is NULL.");
+        }
+        else
+        {
+            _audioSource.clip = _explosionSoundClip;
+        }
+        if (!TryGetComponent(out _renderer))
+        {
+            Debug.LogError("The Renderer on the Asteroid is NULL.");
+        }
+        if (!TryGetComponent(out _collider2D))
+        {
+            Debug.LogError("The Collider2D on the Asteroid is NULL.");
         }
     }
 
@@ -40,6 +59,8 @@ public class Asteroid : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            _audioSource.Play();
+
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
             if (_player != null)
@@ -48,12 +69,16 @@ public class Asteroid : MonoBehaviour
             }
 
             _speed = 0;
-            Destroy(this.gameObject, 0.25f);
+
+            _renderer.enabled = false;
+            Destroy(this.gameObject, 2.5f);
             Destroy(prefabInstance, 3f);
         }
 
         if (other.CompareTag("Laser"))
         {
+            _audioSource.Play();
+
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
 
@@ -63,18 +88,25 @@ public class Asteroid : MonoBehaviour
             }
 
             _speed = 0;
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 0.25f);
+
+            _renderer.enabled = false;
+            Destroy(_collider2D);
+            Destroy(this.gameObject, 2.5f);
             Destroy(prefabInstance, 3f);
         }
+
         if (other.CompareTag("Enemy"))
         {
+            _audioSource.Play();
+
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
 
             _speed = 0;
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 0.25f);
+
+            _renderer.enabled = false;
+            Destroy(_collider2D);
+            Destroy(this.gameObject, 2.5f);
             Destroy(prefabInstance, 3f);
         }
     }

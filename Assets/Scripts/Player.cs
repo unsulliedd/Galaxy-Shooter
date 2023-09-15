@@ -46,18 +46,15 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _shieldVisualizer.SetActive(false);
 
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        if (_uiManager == null)
+        if (!GameObject.Find("Canvas").TryGetComponent<UIManager>(out _uiManager))
         {
             Debug.LogError("The UI Manager is NULL.");
         }
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        if (_spawnManager == null)
+        if (!GameObject.Find("Spawn_Manager").TryGetComponent<SpawnManager>(out _spawnManager))
         {
             Debug.LogError("The Spawn Manager is NULL.");
         }
-        _audioSource = GetComponent<AudioSource>();
-        if (_audioSource == null)
+        if (!TryGetComponent<AudioSource>(out _audioSource))
         {
             Debug.LogError("The Audio Source on the player is NULL.");
         }

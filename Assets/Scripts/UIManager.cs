@@ -24,9 +24,8 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
-        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-
-        if(_gameManager == null)
+        
+        if(!GameObject.Find("Game_Manager").TryGetComponent<GameManager>(out _gameManager))
         {
             Debug.LogError("The Game Manager is NULL.");
         }
