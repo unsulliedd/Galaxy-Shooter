@@ -8,7 +8,7 @@ public class Asteroid : MonoBehaviour
     private float _speed = 5.0f;
     [SerializeField]
     private GameObject _explosionPrefab;
-
+    [SerializeField]
     private bool _isDestroyed = false;
 
     private Player _player;

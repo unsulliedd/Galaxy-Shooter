@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4.0f;
-
+    [SerializeField]
     private bool _isDestroyed = false;
 
     private Player _player;
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            Destroy(this.gameObject, 2.5f);
+            Destroy(this.gameObject, 2.2f);
         }
 
         else if(other.CompareTag("Laser"))
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            Destroy(this.gameObject, 2.5f);
+            Destroy(this.gameObject, 2.2f);
         }
     }
 }
