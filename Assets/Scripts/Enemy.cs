@@ -5,6 +5,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
 
+    private bool _isDestroyed = false;
+
     private Player _player;
     private Animator _animator;
 
@@ -29,21 +31,31 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(_speed * Time.deltaTime * Vector3.down);
 
-        if(transform.position.y < -6.0f)
+        if(_player != null && transform.position.y < -6.0f)
         {
             float randomXPosition = Random.Range(-8.0f, 8.0f);
             transform.position = new Vector3(randomXPosition, 7.0f, 0);
         }
+        else if(_player == null)
+        {
+            Destroy(this.gameObject);
+        }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (_isDestroyed)
+        {
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
             if(_player != null)
             {
                 _player.Damage();
             }
+            _isDestroyed = true;
+
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.5f);
@@ -57,6 +69,8 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
+            _isDestroyed = true;
+
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.5f);
