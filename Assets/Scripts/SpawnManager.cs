@@ -8,9 +8,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
+    private GameObject _asteroidPrefab;
+    [SerializeField]
+    private GameObject _asteroidContainer;
+    [SerializeField]
     private GameObject[] _powerUps;
     [SerializeField]
-    private float _spawnRate = 3.0f;
+    private float _enemySpawnRate = 3.0f;
+    [SerializeField]
+    private float _asteroidSpawnRate = 10.0f;
 
     private bool _stopSpawning = false;
 
@@ -18,6 +24,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(EnemySpawnRoutine());
+        StartCoroutine(AsteroidSpawnRoutine());
         StartCoroutine(PowerUpSpawnRoutine());
     }
 
@@ -34,7 +41,22 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.parent = _enemyContainer.transform;
 
             // Wait for 3 seconds
-            yield return new WaitForSeconds(_spawnRate);
+            yield return new WaitForSeconds(_enemySpawnRate);
+        }
+    }
+
+    IEnumerator AsteroidSpawnRoutine()
+    {
+        yield return new WaitForSeconds(10);
+
+        while (_stopSpawning == false)
+        {
+            // Instantiate an asteroid prefab
+            Vector3 spawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), 9.0f, 0);
+            GameObject newAsteroid = Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
+            newAsteroid.transform.parent = _asteroidContainer.transform;
+
+            yield return new WaitForSeconds(_asteroidSpawnRate);
         }
     }
 

@@ -605,11 +605,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 5794634579973101623, guid: 9105cd8d4cc2ac4439e46f1172f2b0fc, type: 3}
   _enemyContainer: {fileID: 821046511}
+  _asteroidPrefab: {fileID: 19544418585038881, guid: 1682e0849d24e8149881a8aea311ecfa, type: 3}
+  _asteroidContainer: {fileID: 695982192}
   _powerUps:
   - {fileID: 6279422416030466170, guid: 616ab1197ae5f2841813d1d7b08b8f23, type: 3}
   - {fileID: 2550182571385438801, guid: a9d7d867ba0a67342bc69d2903daa45b, type: 3}
   - {fileID: 943953589316476007, guid: e078395202a3abc45848c83f787bac37, type: 3}
-  _spawnRate: 3
+  _enemySpawnRate: 3
+  _asteroidSpawnRate: 10
 --- !u!4 &274600236
 Transform:
   m_ObjectHideFlags: 0
@@ -624,6 +627,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 821046512}
+  - {fileID: 695982193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &497107098
@@ -798,6 +802,37 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
   - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
+--- !u!1 &695982192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695982193}
+  m_Layer: 0
+  m_Name: Asteroid_Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &695982193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695982192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 274600236}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
