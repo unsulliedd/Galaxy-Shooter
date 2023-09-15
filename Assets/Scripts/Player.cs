@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     private bool _isShieldsActive = false;
     [SerializeField]
     private GameObject _shieldVisualizer;
+    [SerializeField]
+    private GameObject _thruster;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -79,6 +81,21 @@ public class Player : MonoBehaviour
 
         // Clamp the player's position vertically
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -VerticalBoundary, VerticalBoundary), 0);
+        
+        // If the player is moving vertically and pressed shift, activate the thruster
+        if(_isSpeedBoostActive == false)
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                _speed = 6f;
+                _thruster.SetActive(true);
+            }
+            else
+            {
+                _speed = 5f;
+                _thruster.SetActive(false);
+            }
+        }
 
         // Wrap the player's position horizontally
         if (transform.position.x > HorizontalBoundary)
@@ -93,6 +110,7 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
+        // Set the next fire time
         _nextFire = Time.time + _fireRate;
         if(_isTripleShotActive == true)
         {
