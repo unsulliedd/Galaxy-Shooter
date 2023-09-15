@@ -8,8 +8,6 @@ public class Asteroid : MonoBehaviour
     private float _speed = 5.0f;
     [SerializeField]
     private GameObject _explosionPrefab;
-    [SerializeField]
-    private bool _isDestroyed = false;
 
     private Player _player;
 
@@ -40,15 +38,8 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isDestroyed)
-        {
-            return;
-        }
-
         if (other.CompareTag("Player"))
         {
-            _isDestroyed = true;
-
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
             if (_player != null)
@@ -63,8 +54,6 @@ public class Asteroid : MonoBehaviour
 
         if (other.CompareTag("Laser"))
         {
-            _isDestroyed = true;
-
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
 
@@ -74,17 +63,17 @@ public class Asteroid : MonoBehaviour
             }
 
             _speed = 0;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 0.25f);
             Destroy(prefabInstance, 3f);
         }
         if (other.CompareTag("Enemy"))
         {
-            _isDestroyed = true;
-
             GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
 
             _speed = 0;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 0.25f);
             Destroy(prefabInstance, 3f);
         }

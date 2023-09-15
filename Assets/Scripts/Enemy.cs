@@ -4,8 +4,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4.0f;
-    [SerializeField]
-    private bool _isDestroyed = false;
 
     private Player _player;
     private Animator _animator;
@@ -43,18 +41,12 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isDestroyed)
-        {
-            return;
-        }
-
         if (other.CompareTag("Player"))
         {
             if(_player != null)
             {
                 _player.Damage();
             }
-            _isDestroyed = true;
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
@@ -69,10 +61,10 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
-            _isDestroyed = true;
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.2f);
         }
     }
