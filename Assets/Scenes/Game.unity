@@ -1710,6 +1710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionSound: {fileID: 1169861317107259378, guid: 093a0481443b66d4fa8f0e7698f0688e, type: 3}
+  _powerUpPickUpSound: {fileID: 5251743589736995270, guid: af18369842ba6f045a10eb5a678d4e7e, type: 3}
 --- !u!1 &1466796827
 GameObject:
   m_ObjectHideFlags: 0
