@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PowerUp : MonoBehaviour
 {
@@ -6,6 +7,17 @@ public class PowerUp : MonoBehaviour
     private int _powerUpID; // 0 = Triple Shot, 1 = Speed, 2 = Shields
     [SerializeField]
     private float _speed = 3.0f;
+
+    private AudioManager _audioManager;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (!GameObject.Find("Audio_Manager").TryGetComponent(out _audioManager))
+        {
+            Debug.LogError("The Game Manager is NULL.");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -21,18 +33,20 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+            if (other.transform.TryGetComponent<Player>(out var player))
             {
                 switch (_powerUpID)
                 {
                     case 0:
+                        _audioManager.PowerUpPickUpSound(transform.position);
                         player.TripleShotActive();
                         break;
                     case 1:
+                        _audioManager.PowerUpPickUpSound(transform.position);
                         player.SpeedBoostActive();
                         break;
                     case 2:
+                        _audioManager.PowerUpPickUpSound(transform.position);
                         player.ShieldsActive();
                         break;
                     default:
