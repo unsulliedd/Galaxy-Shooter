@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +24,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         
-        if(!GameObject.Find("Game_Manager").TryGetComponent<GameManager>(out _gameManager))
+        if(!GameObject.Find("Game_Manager").TryGetComponent(out _gameManager))
         {
             Debug.LogError("The Game Manager is NULL.");
         }
