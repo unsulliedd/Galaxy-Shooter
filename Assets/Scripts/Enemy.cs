@@ -4,32 +4,30 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4.0f;
-    [SerializeField]
-    private AudioClip _explosionSoundClip;
 
     private Player _player;
     private Animator _animator;
-    private AudioSource _audioSource;
+    private Collider2D _collider2D;
+    private AudioManager _audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(!GameObject.Find("Player").TryGetComponent<Player>(out _player))
+        if(!GameObject.Find("Player").TryGetComponent(out _player))
         {
             Debug.LogError("The Player is NULL.");
         }
-
-        if(!TryGetComponent(out _animator))
+        if (!GameObject.Find("Audio_Manager").TryGetComponent(out _audioManager))
+        {
+            Debug.LogError("The Game Manager is NULL.");
+        }
+        if (!TryGetComponent(out _animator))
         {
             Debug.LogError("The Animator is NULL.");
         }
-        if(!TryGetComponent(out _audioSource))
+        if(!TryGetComponent(out _collider2D))
         {
-            Debug.LogError("The AudioSource on the Enemy is NULL.");
-        }
-        else
-        {
-            _audioSource.clip = _explosionSoundClip;
+            Debug.LogError("The Collider2D is NULL.");
         }
     }
 
@@ -45,10 +43,12 @@ public class Enemy : MonoBehaviour
         }
         else if(_player == null)
         {
-            _audioSource.Play();
+            _audioManager.ExplosionSound(transform.position);
+            Destroy(_collider2D);
             Destroy(this.gameObject);
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -60,8 +60,9 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            _audioSource.Play();
+            _audioManager.ExplosionSound(transform.position);
 
+            Destroy(_collider2D);
             Destroy(this.gameObject, 2.8f);
 
         }
@@ -69,7 +70,6 @@ public class Enemy : MonoBehaviour
         else if(other.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
-            _audioSource.Play();
 
             if (_player != null)
             {
@@ -78,9 +78,9 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            _audioSource.Play();
+            _audioManager.ExplosionSound(transform.position);
 
-            Destroy(GetComponent<Collider2D>());
+            Destroy(_collider2D);
             Destroy(this.gameObject, 2.8f);
         }
     }
