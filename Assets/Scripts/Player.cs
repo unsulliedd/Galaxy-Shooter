@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     private GameObject _thruster;
     [SerializeField]
     private GameObject _leftEngineFire, _rightEngineFire;
-
+    [SerializeField]
+    private GameObject _explosionPrefab;
     [SerializeField]
     private AudioClip _laserSoundClip;
 
@@ -46,11 +47,11 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _shieldVisualizer.SetActive(false);
 
-        if (!GameObject.Find("Canvas").TryGetComponent<UIManager>(out _uiManager))
+        if (!GameObject.Find("Canvas").TryGetComponent(out _uiManager))
         {
             Debug.LogError("The UI Manager is NULL.");
         }
-        if (!GameObject.Find("Spawn_Manager").TryGetComponent<SpawnManager>(out _spawnManager))
+        if (!GameObject.Find("Spawn_Manager").TryGetComponent(out _spawnManager))
         {
             Debug.LogError("The Spawn Manager is NULL.");
         }
@@ -147,18 +148,19 @@ public class Player : MonoBehaviour
             return;
         }
 
-
         _lives--;
         _uiManager.UpdateLives(_lives);
         HandleEngineDamage(randomIndex);
 
         if (_lives < 1)
         {
+            GameObject prefabInstance = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             if (_spawnManager != null)
             {
                 _spawnManager.OnPlayerDeath();
             }
             Destroy(this.gameObject);
+            Destroy(prefabInstance, 3f);
         }
     }
 
