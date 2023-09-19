@@ -6,6 +6,17 @@ public class Laser : MonoBehaviour
     private float _speed = 8.0f;
     private bool _isEnemyLaser = false;
 
+    private AudioManager _audioManager;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (!GameObject.Find("Audio_Manager").TryGetComponent(out _audioManager))
+        {
+            Debug.LogError("The Game Manager is NULL.");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -60,6 +71,7 @@ public class Laser : MonoBehaviour
     {
         if(other.CompareTag("Player") && _isEnemyLaser)
         {
+            _audioManager.ExplosionSound(transform.position);
             if(other.TryGetComponent<Player>(out var player))
             {
                 player.Damage();
