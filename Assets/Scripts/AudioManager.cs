@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
     private GameObject _explosionSound;
     [SerializeField]
     private GameObject _powerUpPickUpSound;
+    [SerializeField]
+    private GameObject _laserSound;
 
     public void ExplosionSound(Vector2 position)
     {
@@ -46,6 +48,27 @@ public class AudioManager : MonoBehaviour
         else
         {
             Debug.LogError("_powerUpSound is not assigned in AudioManager.");
+        }
+    }
+
+    public void DoubleLaserSound(Vector2 position)
+    {
+        if (_laserSound != null)
+        {
+            if (_laserSound.TryGetComponent<AudioSource>(out var _doubleLaserSoundclip))
+            {
+                AudioSource doubleLaserSoundInstance = Instantiate(_doubleLaserSoundclip, position, Quaternion.identity);
+                doubleLaserSoundInstance.Play();
+                Destroy(doubleLaserSoundInstance.gameObject, _doubleLaserSoundclip.clip.length);
+            }
+            else
+            {
+                Debug.LogError("AudioSource component is missing in _doubleLaserSound.");
+            }
+        }
+        else
+        {
+            Debug.LogError("_doubleLaserSound is not assigned in AudioManager.");
         }
     }
 }

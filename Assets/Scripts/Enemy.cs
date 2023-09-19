@@ -68,6 +68,7 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(5.0f, 8.0f);
             _canFire = Time.time + _fireRate;
+            _audioManager.DoubleLaserSound(transform.position);
             GameObject enemyLaserPrefab = Instantiate(_doubleLaser, transform.position + new Vector3(0.1f, -1, 0), Quaternion.identity);
             Laser[] lasers = enemyLaserPrefab.GetComponentsInChildren<Laser>();
             for (int i = 0; i < lasers.Length; i++)

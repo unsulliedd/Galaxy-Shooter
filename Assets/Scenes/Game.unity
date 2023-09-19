@@ -1711,6 +1711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionSound: {fileID: 1169861317107259378, guid: 093a0481443b66d4fa8f0e7698f0688e, type: 3}
   _powerUpPickUpSound: {fileID: 5251743589736995270, guid: af18369842ba6f045a10eb5a678d4e7e, type: 3}
+  _laserSound: {fileID: 6209351184374034402, guid: 73cfe2501ad07544aa8691fd00535f3c, type: 3}
 --- !u!1 &1466796827
 GameObject:
   m_ObjectHideFlags: 0
