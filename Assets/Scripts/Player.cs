@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     private GameObject _explosionPrefab;
     [SerializeField]
     private AudioClip _laserSoundClip;
+    [SerializeField]
+    private float _currentThrusterTime = 5f;
+
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -94,19 +97,33 @@ public class Player : MonoBehaviour
 
         // Clamp the player's position vertically
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -VerticalBoundary, VerticalBoundary), 0);
-        
-        // If the player is moving vertically and pressed shift, activate the thruster
-        if(_isSpeedBoostActive == false)
+
+        // If player pressed shift, increase speed for 5 seconds
+        if (_isSpeedBoostActive == false)
         {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
-                _speed = 6f;
-                _thruster.SetActive(true);
+                if (_currentThrusterTime > 0)
+                {
+                    _currentThrusterTime -= Time.deltaTime;
+                    _speed = 6f;
+                    _thruster.SetActive(true);
+                    _uiManager.UpdateSprintBar(_currentThrusterTime);
+                }
+                else
+                {
+                    _thruster.SetActive(false);
+                }
             }
             else
             {
-                _speed = 5f;
-                _thruster.SetActive(false);
+                if (_currentThrusterTime < 5)
+                {
+                    _speed = 5f;
+                    _currentThrusterTime += Time.deltaTime;
+                    _thruster.SetActive(false);
+                    _uiManager.UpdateSprintBar(_currentThrusterTime);
+                }
             }
         }
 

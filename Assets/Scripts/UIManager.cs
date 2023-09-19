@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     private Image _livesImage;
     [SerializeField]
     private Sprite[] _liveSprites;
+    [SerializeField]
+    private Slider _thrusterSlider;
 
     private GameManager _gameManager;
 
@@ -61,5 +63,10 @@ public class UIManager : MonoBehaviour
             _gameOverText.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void UpdateSprintBar(float currentThrusterTime)
+    {
+        _thrusterSlider.value = currentThrusterTime;
     }
 }
