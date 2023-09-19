@@ -101,6 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  _fireRate: 3
+  _canFire: 0
+  _doubleLaser: {fileID: 535818430203851319, guid: 7023f00e4363fec469a6729509cd1f30, type: 3}
 --- !u!61 &1349459566146058803
 BoxCollider2D:
   m_ObjectHideFlags: 0
