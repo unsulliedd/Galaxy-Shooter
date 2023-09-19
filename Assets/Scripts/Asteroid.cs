@@ -88,5 +88,17 @@ public class Asteroid : MonoBehaviour
             Destroy(this.gameObject, 0.25f);
             Destroy(explosionPrefabInstance, 3f);
         }
+
+        if (other.CompareTag("EnemyLaser"))
+        {
+            _audioManager.ExplosionSound(transform.position);
+
+            Destroy(other.gameObject);
+
+            _speed = 0;
+
+            Destroy(this.gameObject, 0.25f);
+            Destroy(explosionPrefabInstance, 3f);
+        }
     }
 }

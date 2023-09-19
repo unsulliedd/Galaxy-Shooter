@@ -1,9 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4.0f;
+    [SerializeField]
+    private float _fireRate = 3.0f;
+    [SerializeField]
+    private float _canFire = 0f;
+    [SerializeField]
+    private GameObject _doubleLaser;
 
     private Player _player;
     private Animator _animator;
@@ -34,18 +41,39 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EnemyMovement();
+        EnemyFire();
+    }
+
+    private void EnemyMovement()
+    {
         transform.Translate(_speed * Time.deltaTime * Vector3.down);
 
-        if(_player != null && transform.position.y < -6.0f)
+        if (_player != null && transform.position.y < -6.0f)
         {
             float randomXPosition = Random.Range(-8.0f, 8.0f);
             transform.position = new Vector3(randomXPosition, 7.0f, 0);
         }
-        else if(_player == null)
+        else if (_player == null)
         {
             _audioManager.ExplosionSound(transform.position);
             Destroy(_collider2D);
             Destroy(this.gameObject);
+        }
+    }
+
+    private void EnemyFire()
+    {
+        if (Time.time > _canFire && _collider2D != null)
+        {
+            _fireRate = Random.Range(5.0f, 8.0f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaserPrefab = Instantiate(_doubleLaser, transform.position + new Vector3(0.1f, -1, 0), Quaternion.identity);
+            Laser[] lasers = enemyLaserPrefab.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
         }
     }
 
