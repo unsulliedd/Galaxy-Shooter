@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private bool _isGameOver;
+    public bool _isGameOver;
+    [SerializeField]
+    private GameObject _pauseMenu;
+    [SerializeField]
+    private Button _resumeButton;
 
     // Update is called once per frame
     private void Update()
@@ -13,15 +18,38 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && _isGameOver == true)
+
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene(0);
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                _pauseMenu.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                _pauseMenu.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            if (_isGameOver == true)
+            {
+                _resumeButton.interactable = false;
+            }
         }
     }
 
     public void GameOver()
     {
         _isGameOver = true;
+    }
+
+    public void ResumePlay() 
+    {   
+        Time.timeScale = 1;
+        _pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

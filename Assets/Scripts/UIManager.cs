@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -63,6 +64,28 @@ public class UIManager : MonoBehaviour
             _gameOverText.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void ResumePlay()
+    {
+        _gameManager.ResumePlay();
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1;
+    }
+
+    public void ReturnMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void UpdateSprintBar(float currentThrusterTime)
