@@ -73,9 +73,12 @@ public class Player : MonoBehaviour
         PlayerMovement();
 
         // If the space key is pressed and the current time is greater than the next fire time
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire || Input.GetKeyDown(KeyCode.Mouse0) && Time.time > _nextFire)
+        if (Time.timeScale == 1 && Time.time > _nextFire)
         {
-            FireLaser();
+            if(Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                FireLaser();
+            }
         }
     }
 
