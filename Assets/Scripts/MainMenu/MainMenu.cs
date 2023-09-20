@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void LoadGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(1);
     }
 
