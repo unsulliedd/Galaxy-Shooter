@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _scoreText;
     [SerializeField]
+    private TextMeshProUGUI _timeText;
+    [SerializeField]
     private TextMeshProUGUI _gameOverText;
     [SerializeField]
     private TextMeshProUGUI _restartText;
@@ -18,6 +20,7 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private Slider _thrusterSlider;
+    private float _time = 0.0f;
 
     private GameManager _gameManager;
 
@@ -30,6 +33,23 @@ public class UIManager : MonoBehaviour
         if (!GameObject.FindWithTag("GameManager").TryGetComponent(out _gameManager))
         {
             Debug.LogError("The Game Manager is NULL.");
+        }
+    }
+
+    void Update()
+    {
+        CalculateTime();
+    }
+
+    public void CalculateTime()
+    {
+        if (_gameManager._isGameOver == false)
+        {
+            _time += Time.deltaTime;
+            int minutes = Mathf.FloorToInt(_time / 60F);
+            int seconds = Mathf.FloorToInt(_time - minutes * 60);
+
+            _timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 
@@ -46,7 +66,7 @@ public class UIManager : MonoBehaviour
             GameOverSequence();
         }
     }
-    
+
     void GameOverSequence()
     {
         _gameManager.GameOver();
