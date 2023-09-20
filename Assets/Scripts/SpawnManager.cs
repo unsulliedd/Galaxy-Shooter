@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _powerUps;
     [SerializeField]
+    private float _spawnAfterDelay = 2.0f;
+    [SerializeField]
     private float _enemySpawnRate = 3.0f;
     [SerializeField]
     private float _asteroidSpawnRate = 10.0f;
@@ -23,6 +25,13 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(StartSpawnAfterDelay(_spawnAfterDelay));
+    }
+
+    IEnumerator StartSpawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         StartCoroutine(EnemySpawnRoutine());
         StartCoroutine(AsteroidSpawnRoutine());
         StartCoroutine(PowerUpSpawnRoutine());
@@ -45,6 +54,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    // Spawn asteroids every 10 seconds
     IEnumerator AsteroidSpawnRoutine()
     {
         yield return new WaitForSeconds(10);
