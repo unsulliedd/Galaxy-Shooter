@@ -247,5 +247,6 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+        _uiManager.UpdateHighScore(_score);
     }
 }

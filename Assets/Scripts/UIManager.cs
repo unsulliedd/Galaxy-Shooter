@@ -7,27 +7,22 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _scoreText;
-    [SerializeField]
-    private TextMeshProUGUI _timeText;
-    [SerializeField]
-    private TextMeshProUGUI _gameOverText;
-    [SerializeField]
-    private TextMeshProUGUI _restartText;
+    private TextMeshProUGUI _scoreText, _timeText, _highScoreText, _gameOverText, _restartText;
     [SerializeField]
     private Image _livesImage;
     [SerializeField]
     private Sprite[] _liveSprites;
     [SerializeField]
     private Slider _thrusterSlider;
-    private float _time = 0.0f;
 
+    private float _time = 0.0f;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = "Score: " + 0;
+        _highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         _gameOverText.gameObject.SetActive(false);
 
         if (!GameObject.FindWithTag("GameManager").TryGetComponent(out _gameManager))
@@ -49,7 +44,7 @@ public class UIManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(_time / 60F);
             int seconds = Mathf.FloorToInt(_time - minutes * 60);
 
-            _timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            _timeText.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
         }
     }
 
@@ -57,6 +52,18 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.text = "Score: " + playerScore.ToString();
     }
+
+    public void UpdateHighScore(int score)
+    {
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("HighScore", highScore);
+            _highScoreText.text = "High Score: " + highScore.ToString();
+        }
+    }
+
 
     public void UpdateLives(int currentLive)
     {
