@@ -12,6 +12,9 @@ public class Settings : MonoBehaviour
     private Slider _musicVolumeSlider, _sfxVolumeSlider, _masterVolumeSlider;
     [SerializeField]
     private Toggle _fullScreenToggle;
+    [SerializeField]
+    private GameObject _settingsPanel, _confirmationPanel, _backgroundPanel;
+
 
     public AudioMixer audioMixer;
 
@@ -63,12 +66,27 @@ public class Settings : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void OpenConfirmationPanel()
+    {
+        _settingsPanel.SetActive(false);
+        _backgroundPanel.SetActive(true);
+        _confirmationPanel.SetActive(true);
+    }
+
+    public void CloseConfirmationPanel()
+    {
+        _settingsPanel.SetActive(true);
+        _backgroundPanel.SetActive(false);
+        _confirmationPanel.SetActive(false);
+    }
+
     public void ResetToDefaults()
     {
         SetFullScreen(defaultFullScreen);
         SetMusicVolume(defaultMusicVolume);
         SetSfxVolume(defaultSfxVolume);
         SetMasterVolume(defaultMasterVolume);
+        CloseConfirmationPanel();
     }
 
     public void SaveSettings(bool isFullScreen, float musicVolume, float sfxVolume, float masterVolume)
