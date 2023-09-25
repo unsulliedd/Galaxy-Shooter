@@ -3100,7 +3100,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1560598101}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SetFullScreen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1029937908
 GameObject:
@@ -4941,6 +4953,7 @@ MonoBehaviour:
   _musicVolumeSlider: {fileID: 1776667626}
   _sfxVolumeSlider: {fileID: 1668557684}
   _masterVolumeSlider: {fileID: 1987412098}
+  _fullScreenToggle: {fileID: 1013513065}
   audioMixer: {fileID: 24100000, guid: acac4cfe68b2eee4584ebbc06e96b899, type: 2}
 --- !u!1 &1578098535
 GameObject:

@@ -6,62 +6,74 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    public TextMeshProUGUI _musicVolumeText, _sfxVolumeText, _masterVolumeText;
-    public Slider _musicVolumeSlider, _sfxVolumeSlider, _masterVolumeSlider;
+    [SerializeField]
+    private TextMeshProUGUI _musicVolumeText, _sfxVolumeText, _masterVolumeText;
+    [SerializeField]
+    private Slider _musicVolumeSlider, _sfxVolumeSlider, _masterVolumeSlider;
+    [SerializeField]
+    private Toggle _fullScreenToggle;
+
     public AudioMixer audioMixer;
 
     // Default values
+    private readonly bool defaultFullScreen = true;
+    private readonly float minVolume = -80f;
+    private readonly float maxVolume = 0f;
     private readonly float defaultMusicVolume = 0f;
     private readonly float defaultSfxVolume = 0f;
     private readonly float defaultMasterVolume = 0f;
 
-    private void Start()
+    void Start()
     {
         LoadSettings();
+    }
+
+    public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
+        _fullScreenToggle.isOn = isFullScreen == true;
+        _fullScreenToggle.onValueChanged.AddListener(SetFullScreen);
     }
 
     public void SetMusicVolume(float musicVolume)
     {
         audioMixer.SetFloat("MusicVolume", musicVolume);
-        float normalizedValue = Mathf.InverseLerp(-80f, 0f, musicVolume) * 100f;
-        _musicVolumeText.text = Mathf.Round(normalizedValue).ToString();
-        _musicVolumeSlider.value = musicVolume;
+        UpdateUIElements(musicVolume, _musicVolumeText, _musicVolumeSlider);
     }
 
     public void SetSfxVolume(float sfxVolume)
     {
         audioMixer.SetFloat("SfxVolume", sfxVolume);
-        float normalizedValue = Mathf.InverseLerp(-80f, 0f, sfxVolume) * 100f;
-        _sfxVolumeText.text = Mathf.Round(normalizedValue).ToString();
-        _sfxVolumeSlider.value = sfxVolume;
+        UpdateUIElements(sfxVolume, _sfxVolumeText, _sfxVolumeSlider);
     }
 
     public void SetMasterVolume(float masterVolume)
     {
         audioMixer.SetFloat("MasterVolume", masterVolume);
-        float normalizedValue = Mathf.InverseLerp(-80f, 0f, masterVolume) * 100f;
-        _masterVolumeText.text = Mathf.Round(normalizedValue).ToString();
-        _masterVolumeSlider.value = masterVolume;
+        UpdateUIElements(masterVolume, _masterVolumeText, _masterVolumeSlider);
     }
 
     public void Back()
     {
+        bool isFullScreen = Screen.fullScreen;
         float musicVolume = _musicVolumeSlider.value;
         float sfxVolume = _sfxVolumeSlider.value;
         float masterVolume = _masterVolumeSlider.value;
-        SaveSettings(musicVolume, sfxVolume, masterVolume);
+        SaveSettings(isFullScreen, musicVolume, sfxVolume, masterVolume);
         SceneManager.LoadScene(0);
     }
 
     public void ResetToDefaults()
     {
+        SetFullScreen(defaultFullScreen);
         SetMusicVolume(defaultMusicVolume);
         SetSfxVolume(defaultSfxVolume);
         SetMasterVolume(defaultMasterVolume);
     }
 
-    public void SaveSettings(float musicVolume, float sfxVolume, float masterVolume)
+    public void SaveSettings(bool isFullScreen, float musicVolume, float sfxVolume, float masterVolume)
     {
+        PlayerPrefs.SetInt("FullScreen", (isFullScreen ? 1 : 0));
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         PlayerPrefs.SetFloat("SfxVolume", sfxVolume);
         PlayerPrefs.SetFloat("MasterVolume", masterVolume);
@@ -70,12 +82,24 @@ public class Settings : MonoBehaviour
 
     public void LoadSettings()
     {
+
+        int fullScreen = PlayerPrefs.GetInt("FullScreen", 1);
         float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0f);
         float sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0f);
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 0f);
+        
+        _fullScreenToggle.isOn = fullScreen == 1;
 
+        SetFullScreen(fullScreen == 1);
         SetMusicVolume(musicVolume);
         SetSfxVolume(sfxVolume);
         SetMasterVolume(masterVolume);
+    }
+
+    private void UpdateUIElements(float volume, TextMeshProUGUI text, Slider slider)
+    {
+        float normalizedValue = Mathf.InverseLerp(minVolume, maxVolume, volume) * 100f;
+        text.text = Mathf.Round(normalizedValue).ToString();
+        slider.value = volume;
     }
 }
