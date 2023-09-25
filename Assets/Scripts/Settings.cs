@@ -6,10 +6,14 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    [SerializeField]
-    public TextMeshProUGUI _musicVolumeText, _sfxVolumeText;
-    public Slider _musicVolumeSlider, _sfxVolumeSlider;
+    public TextMeshProUGUI _musicVolumeText, _sfxVolumeText, _masterVolumeText;
+    public Slider _musicVolumeSlider, _sfxVolumeSlider, _masterVolumeSlider;
     public AudioMixer audioMixer;
+
+    // Default values
+    private readonly float defaultMusicVolume = 0f;
+    private readonly float defaultSfxVolume = 0f;
+    private readonly float defaultMasterVolume = 0f;
 
     private void Start()
     {
@@ -22,7 +26,6 @@ public class Settings : MonoBehaviour
         float normalizedValue = Mathf.InverseLerp(-80f, 0f, musicVolume) * 100f;
         _musicVolumeText.text = Mathf.Round(normalizedValue).ToString();
         _musicVolumeSlider.value = musicVolume;
-        SaveSettings(musicVolume, PlayerPrefs.GetFloat("SfxVolume", 0f));
     }
 
     public void SetSfxVolume(float sfxVolume)
@@ -31,19 +34,37 @@ public class Settings : MonoBehaviour
         float normalizedValue = Mathf.InverseLerp(-80f, 0f, sfxVolume) * 100f;
         _sfxVolumeText.text = Mathf.Round(normalizedValue).ToString();
         _sfxVolumeSlider.value = sfxVolume;
-        SaveSettings(PlayerPrefs.GetFloat("MusicVolume", 0f), sfxVolume);
+    }
+
+    public void SetMasterVolume(float masterVolume)
+    {
+        audioMixer.SetFloat("MasterVolume", masterVolume);
+        float normalizedValue = Mathf.InverseLerp(-80f, 0f, masterVolume) * 100f;
+        _masterVolumeText.text = Mathf.Round(normalizedValue).ToString();
+        _masterVolumeSlider.value = masterVolume;
     }
 
     public void Back()
     {
-        SaveSettings(PlayerPrefs.GetFloat("MusicVolume", 0f), PlayerPrefs.GetFloat("SfxVolume", 0f));
+        float musicVolume = _musicVolumeSlider.value;
+        float sfxVolume = _sfxVolumeSlider.value;
+        float masterVolume = _masterVolumeSlider.value;
+        SaveSettings(musicVolume, sfxVolume, masterVolume);
         SceneManager.LoadScene(0);
     }
 
-    public void SaveSettings(float musicVolume, float sfxVolume)
+    public void ResetToDefaults()
+    {
+        SetMusicVolume(defaultMusicVolume);
+        SetSfxVolume(defaultSfxVolume);
+        SetMasterVolume(defaultMasterVolume);
+    }
+
+    public void SaveSettings(float musicVolume, float sfxVolume, float masterVolume)
     {
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         PlayerPrefs.SetFloat("SfxVolume", sfxVolume);
+        PlayerPrefs.SetFloat("MasterVolume", masterVolume);
         PlayerPrefs.Save();
     }
 
@@ -51,8 +72,10 @@ public class Settings : MonoBehaviour
     {
         float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0f);
         float sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0f);
+        float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 0f);
 
         SetMusicVolume(musicVolume);
         SetSfxVolume(sfxVolume);
+        SetMasterVolume(masterVolume);
     }
 }
