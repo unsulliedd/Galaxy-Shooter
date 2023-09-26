@@ -14,7 +14,7 @@ public class Settings : MonoBehaviour
     [SerializeField]
     private Toggle _fullScreenToggle;
     [SerializeField]
-    private GameObject _settingsPanel, _confirmationPanel, _backgroundPanel;
+    private GameObject _settingsPanel,_mainMenuPanel, _pausePanel, _confirmationPanel, _backgroundPanel;
     [SerializeField]
     private TMP_Dropdown _resolutionDropdown;
 
@@ -105,7 +105,18 @@ public class Settings : MonoBehaviour
         int resolutionWidth = resolutions[_resolutionDropdown.value].width;
         int resolutionHeight = resolutions[_resolutionDropdown.value].height;
         SaveSettings(isFullScreen, musicVolume, sfxVolume, masterVolume, resolutionWidth, resolutionHeight);
-        SceneManager.LoadScene(0);
+
+        Scene activeScene = SceneManager.GetActiveScene();
+        if (activeScene.name == "Game" && _mainMenuPanel == null)
+        {
+            _settingsPanel.SetActive(false);
+            _pausePanel.SetActive(true);
+        }
+        else if (activeScene.name == "MainMenu" && _pausePanel == null)
+        {
+            _settingsPanel.SetActive(false);
+            _mainMenuPanel.SetActive(true);
+        }
     }
 
     public void OpenConfirmationPanel()

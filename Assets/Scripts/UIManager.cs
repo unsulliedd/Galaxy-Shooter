@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private Slider _thrusterSlider;
-
+    [SerializeField]
+    private GameObject _pausePanel, _settingsPanel;
     private float _time = 0.0f;
     private GameManager _gameManager;
 
@@ -108,6 +109,11 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
+    }
+    public void OpenSettings()
+    {
+        _pausePanel.SetActive(false);
+        _settingsPanel.SetActive(true);
     }
 
     public void QuitGame()
