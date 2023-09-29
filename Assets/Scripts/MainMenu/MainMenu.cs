@@ -13,14 +13,19 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void QuitGame()
+    public void LoadCoop()
     {
-        Application.Quit();
+        SceneManager.LoadScene(2);
     }
 
     public void OpenSettings()
     {
         _mainMenu.SetActive(false);
         _settingsMenu.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

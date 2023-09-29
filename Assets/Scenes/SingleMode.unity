@@ -379,6 +379,8 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 8713872889556720350, guid: f5d9f1c8303b0f644b4d33108f24de23, type: 3}
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _currentThrusterTime: 5
+  _playerOne: 1
+  _playerTwo: 0
 --- !u!212 &51242147
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2249,7 +2251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3317d484adb158842a12f10b6c003314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isGameOver: 0
+  isGameOver: 0
+  isCoopMode: 0
   _pauseMenu: {fileID: 264825371}
   _resumeButton: {fileID: 1742021962}
 --- !u!4 &497107100
